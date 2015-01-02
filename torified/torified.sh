@@ -31,6 +31,7 @@ run() {
   # tor: 8118 -> 9050
   # proxy: 8123
   # squids port 3128 (http), privoxy 8118, tor 9050 (socks5), polipo 8123, ssh socks 1080
+  # bind9: tcp & udp port 53
   # Note: squid disabled
 }
 
