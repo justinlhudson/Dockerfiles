@@ -1,0 +1,62 @@
+#!/bin/bash
+
+_DOCKER='docker'
+
+
+### Terminal operations ###
+
+if [[ "$@" == *"--start"* ]]; then
+  echo "Start: $_DOCKER_IMAGE"
+  docker_process
+fi
+
+if [[ "$@" == *"--delete"* ]]; then
+  echo "Delete: $_DOCKER_IMAGE"
+  $_DOCKER rmi $_DOCKER_IMAGE
+fi
+
+if [[ "$@" == *"--commit"* ]]; then
+  echo "Commit: $_DOCKER_CONTAINER to $_DOCKER_IMAGE"
+  $_DOCKER commit -m "$OPTARG" $_DOCKER_CONTAINER $_DOCKER_IMAGE
+fi
+
+if [[ "$@" == *"--build"* ]]; then
+  echo "Build: $_DOCKER_IMAGE"
+  $_DOCKER build --quiet=false --no-cache=false --force-rm=true --tag "$_DOCKER_IMAGE" .
+fi
+
+if [[ "$@" == *"--stop"* ]]; then
+  echo "Stop: $_DOCKER_CONTAINER"
+  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1
+fi
+
+if [[ "$@" == *"--export"* ]]; then
+  echo "Export: $_DOCKER_CONTAINER"
+  $_DOCKER stop $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER export $_DOCKER_CONTAINER | gzip -c > $_DOCKER_CONTAINER.tgz
+fi
+
+if [[ "$@" == *"--import"* ]]; then
+  echo "Import: $_DOCKER_IMAGE"
+  $_DOCKER stop $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER rmi $_DOCKER_IMAGE > /dev/null 2>&1
+  gzip -dc "$_DOCKER_CONTAINER".tgz | $_DOCKER import - $_DOCKER_IMAGE
+fi
+
+if [[ "$@" == *"--help"* ]]; then
+  echo -e "
+Usage: option(s)
+
+Options:
+  --start
+  --delete
+  --commit <message>
+  --build
+  --stop
+  --import
+  --export
+  --help
+"
+fi
+
