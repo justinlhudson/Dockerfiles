@@ -52,7 +52,7 @@ fi
 if [[ "$@" == *"--build"* ]]; then
   echo "Build: $_DOCKER_IMAGE"
 
-  local _cacheFlag=false
+  _cacheFlag=false
   if [[ "$@" == *"--no-cache"* ]]; then
     _cacheFlag=true
   fi
