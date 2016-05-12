@@ -51,7 +51,11 @@ fi
 
 if [[ "$@" == *"--build"* ]]; then
   echo "Build: $_DOCKER_IMAGE"
-  $_DOCKER build --quiet=false --no-cache=false --force-rm=true --tag "$_DOCKER_IMAGE" .
+  local _cacheFlag=false
+  if [[ "$@" == *"--no-cache"* ]]; then
+    _cacheFlag=true
+  fi
+  $_DOCKER build --quiet=false --no-cache=$_cacheFlag --force-rm=true --tag="$_DOCKER_IMAGE" .
 fi
 
 if [[ "$@" == *"--stop"* ]]; then
