@@ -36,6 +36,7 @@ docker_stop() {
 
 if [[ "$@" == *"--start"* ]]; then
   echo "Start: $_DOCKER_IMAGE"
+  docker_stop
   docker_process
 fi
 
