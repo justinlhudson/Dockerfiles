@@ -29,7 +29,6 @@ RUN apt-get -y install privoxy tor polipo || true
 ADD privoxy.conf /etc/privoxy/config
 ADD tor.conf /etc/tor/torrc
 ADD polipo.conf /etc/polipo/conf
-ADD named.conf.options /etc/bind/named.conf.options
 
 ## Extended Setup
 # Note: doing all in one command is less container commits
