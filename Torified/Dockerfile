@@ -26,10 +26,12 @@ ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ## Setup
 RUN apt-get -y install privoxy tor polipo || true
 
+EXPOSE 8123
 ADD privoxy.conf /etc/privoxy/config
+EXPOSE 9001 9030
 ADD tor.conf /etc/tor/torrc
+EXPOSE 8118
 ADD polipo.conf /etc/polipo/conf
-ADD named.conf.options /etc/bind/named.conf.options
 
 ## Extended Setup
 # Note: doing all in one command is less container commits
