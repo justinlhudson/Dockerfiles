@@ -7,27 +7,32 @@ _DOCKER_CONTAINER=$2
 ### Functions ###
 
 docker_clean() {
-  # delete old containers
-  docker ps -a | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
-  # delete dangling volumes
-  local _volumes=$(docker volume ls -q -f dangling=true)
-  if [ ! -z "$_volumes" ]; then
-    docker volume rm $_volumes
-  fi
-  # delete dandling images
-  local _images=$(docker images -q -f dangling=true)
-  if [ ! -z "$_images" ]; then
-    docker rmi $_images
-  fi
-  # delete ALL images
-  #docker rmi $(docker images -q) /dev/null 2>&1
+  { # try
+    # delete old containers
+    docker ps -a | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
+    # delete dangling volumes
+    local _volumes=$(docker volume ls -q -f dangling=true)
+    if [ ! -z "$_volumes" ]; then
+      docker volume rm $_volumes
+    fi
+    # delete dandling images
+    local _images=$(docker images -q -f dangling=true)
+    if [ ! -z "$_images" ]; then
+      docker rmi $_images
+    fi
+    # delete ALL images
+    #docker rmi $(docker images -q) /dev/null 2>&1
+  } ||
+  { # finally
+
+  }
 }
 
 docker_stop() {
   $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1
 }
 
-### Terminal operations ###
+### Terminal Operations ###
 
 if [[ "$@" == *"--start"* ]]; then
   echo "Start: $_DOCKER_IMAGE"
