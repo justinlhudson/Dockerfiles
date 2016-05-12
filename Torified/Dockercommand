@@ -1,10 +1,38 @@
 #!/bin/bash
 
+# Usage: ./Dockercommand <image_name> <container_name>
+
 _DOCKER='docker'
 _DOCKER_IMAGE=$1
 _DOCKER_CONTAINER=$2
 
 ### Functions ###
+
+docker_start() {
+  docker_stop
+
+  local _exited=$(docker ps -a -q -f status=exited)
+  if [ ! -z $_exited ]; then
+    docker rm --force $_exited > /dev/null 2>&1
+  fi
+
+  docker_process
+}
+
+docker_stop() {
+  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1 || true
+}
+
+docker_build() {
+  local _cacheFlag=false
+  if [[ "$@" == *"--no-cache"* ]]; then
+    _cacheFlag=true
+  fi
+
+  docker_stop
+  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER build --quiet=false --no-cache=$_cacheFlag --force-rm=true --tag="$_DOCKER_IMAGE" .
+}
 
 docker_clean() {
   { # try
@@ -28,47 +56,46 @@ docker_clean() {
   }
 }
 
-docker_stop() {
-  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1 || true
+docker_delete() {
+  $_DOCKER rmi $_DOCKER_IMAGE
+}
+
+docker_commit() {
+  $_DOCKER commit -m $(date +%Y-%m-%d~%H:%M:%S) $_DOCKER_CONTAINER $_DOCKER_IMAGE
+}
+
+docker_export() {
+  docker_stop
+  $_DOCKER export $_DOCKER_CONTAINER | gzip -c > $_DOCKER_CONTAINER.tgz
+}
+
+docker_import() {
+  docker_stop
+  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER rmi $_DOCKER_IMAGE > /dev/null 2>&1
+  gzip -dc "$_DOCKER_CONTAINER".tgz | $_DOCKER import - $_DOCKER_IMAGE
 }
 
 ### Terminal Operations ###
 
 if [[ "$@" == *"--start"* ]]; then
   echo "Start: $_DOCKER_IMAGE"
-
-  docker_stop
-
-  _exited=$(docker ps -a -q -f status=exited)
-  echo $_exited
-  if [ ! -z $_exited ]; then
-    docker rm --force $_exited > /dev/null 2>&1
-  fi
-
-  docker_process
+  docker_start
 fi
 
 if [[ "$@" == *"--delete"* ]]; then
   echo "Delete: $_DOCKER_IMAGE"
-  $_DOCKER rmi $_DOCKER_IMAGE
+  docker_delete
 fi
 
 if [[ "$@" == *"--commit"* ]]; then
   echo "Commit: $_DOCKER_CONTAINER to $_DOCKER_IMAGE"
-  $_DOCKER commit -m $(date +%Y-%m-%d~%H:%M:%S) $_DOCKER_CONTAINER $_DOCKER_IMAGE
+  docker_commit
 fi
 
 if [[ "$@" == *"--build"* ]]; then
   echo "Build: $_DOCKER_IMAGE"
-
-  _cacheFlag=false
-  if [[ "$@" == *"--no-cache"* ]]; then
-    _cacheFlag=true
-  fi
-
-  docker_stop
-  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
-  $_DOCKER build --quiet=false --no-cache=$_cacheFlag --force-rm=true --tag="$_DOCKER_IMAGE" .
+  docker_build
 fi
 
 if [[ "$@" == *"--stop"* ]]; then
@@ -82,17 +109,12 @@ fi
 
 if [[ "$@" == *"--export"* ]]; then
   echo "Export: $_DOCKER_CONTAINER"
-  docker_stop
-  $_DOCKER export $_DOCKER_CONTAINER | gzip -c > $_DOCKER_CONTAINER.tgz
+  docker_export
 fi
 
 if [[ "$@" == *"--import"* ]]; then
   echo "Import: $_DOCKER_IMAGE"
-
-  docker_stop
-  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
-  $_DOCKER rmi $_DOCKER_IMAGE > /dev/null 2>&1
-  gzip -dc "$_DOCKER_CONTAINER".tgz | $_DOCKER import - $_DOCKER_IMAGE
+  docker_import
 fi
 
 if [[ "$@" == *"--help"* ]]; then
