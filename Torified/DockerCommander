@@ -8,6 +8,8 @@ _directory=$(basename $_base)
 
 # folder name
 _DOCKER_IMAGE="$_directory"
+# lowercase
+_DOCKER_IMAGE=$(echo $_DOCKER_IMAGE | tr '[:upper:]' '[:lower:]')
 _DOCKER_CONTAINER="$_DOCKER_IMAGE"_container
 
 ### Entry Point ###

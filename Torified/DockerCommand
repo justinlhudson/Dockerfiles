@@ -2,6 +2,28 @@
 
 _DOCKER='docker'
 
+### Functions ###
+
+docker_clean() {
+  # delete old containers
+  docker ps -a | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
+  # delete dangling volumes
+  local _volumes=$(docker volume ls -q -f dangling=true)
+  if [ ! -z "$_volumes" ]; then
+    docker volume rm $_volumes
+  fi
+  # delete dandling images
+  local _images=$(docker images -q -f dangling=true)
+  if [ ! -z "$_images" ]; then
+    docker rmi $_images
+  fi
+  # delete ALL images
+  #docker rmi $(docker images -q) /dev/null 2>&1
+}
+
+docker_stop() {
+  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1
+}
 
 ### Terminal operations ###
 
@@ -17,7 +39,7 @@ fi
 
 if [[ "$@" == *"--commit"* ]]; then
   echo "Commit: $_DOCKER_CONTAINER to $_DOCKER_IMAGE"
-  $_DOCKER commit -m "$OPTARG" $_DOCKER_CONTAINER $_DOCKER_IMAGE
+  $_DOCKER commit -m $(date +%Y-%m-%d~%H:%M:%S) $_DOCKER_CONTAINER $_DOCKER_IMAGE
 fi
 
 if [[ "$@" == *"--build"* ]]; then
@@ -27,18 +49,22 @@ fi
 
 if [[ "$@" == *"--stop"* ]]; then
   echo "Stop: $_DOCKER_CONTAINER"
-  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1
+  docker_stop
+fi
+
+if [[ "$@" == *"--clean"* ]]; then
+  docker_clean
 fi
 
 if [[ "$@" == *"--export"* ]]; then
   echo "Export: $_DOCKER_CONTAINER"
-  $_DOCKER stop $_DOCKER_CONTAINER > /dev/null 2>&1
+  docker_stop
   $_DOCKER export $_DOCKER_CONTAINER | gzip -c > $_DOCKER_CONTAINER.tgz
 fi
 
 if [[ "$@" == *"--import"* ]]; then
   echo "Import: $_DOCKER_IMAGE"
-  $_DOCKER stop $_DOCKER_CONTAINER > /dev/null 2>&1
+  docker_stop
   $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
   $_DOCKER rmi $_DOCKER_IMAGE > /dev/null 2>&1
   gzip -dc "$_DOCKER_CONTAINER".tgz | $_DOCKER import - $_DOCKER_IMAGE
@@ -51,7 +77,8 @@ Usage: option(s)
 Options:
   --start
   --delete
-  --commit <message>
+  --clean
+  --commit
   --build
   --stop
   --import
