@@ -11,7 +11,6 @@ _directory=$(basename $_base)
 
 ### Configuration ###
 
-# folder name
 _DOCKER_IMAGE=$(echo $_directory| tr '[:upper:]' '[:lower:]')
 _DOCKER_CONTAINER="$_DOCKER_IMAGE"_container
 
@@ -23,8 +22,10 @@ docker_process() {
   # (used for port redirect)
   local _ports="-p 2222:22"
 
-  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
-  _DOCKER_PID=$($_DOCKER run --detach --tty --net=host --hostname="$_host" --user="$_uid" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE "/usr/bin/supervisord")
+  # entry point (i.e. startup operation)
+  local _execute="/usr/bin/supervisord"
+
+  _DOCKER_PID=$($_DOCKER run --detach --tty --net=host --hostname="$_host" --user="$_uid" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE $_execute)
 }
 
 source ./Dockercommand $_DOCKER_IMAGE $_DOCKER_CONTAINER $@

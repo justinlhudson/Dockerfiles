@@ -23,6 +23,7 @@ RUN apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get auto
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Note: Can override in run command
 CMD ["/usr/bin/supervisord"]
 
 ### Services/Applications ###

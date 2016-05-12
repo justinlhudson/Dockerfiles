@@ -51,10 +51,14 @@ fi
 
 if [[ "$@" == *"--build"* ]]; then
   echo "Build: $_DOCKER_IMAGE"
+
   local _cacheFlag=false
   if [[ "$@" == *"--no-cache"* ]]; then
     _cacheFlag=true
   fi
+
+  docker_stop
+  $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
   $_DOCKER build --quiet=false --no-cache=$_cacheFlag --force-rm=true --tag="$_DOCKER_IMAGE" .
 fi
 
@@ -75,6 +79,7 @@ fi
 
 if [[ "$@" == *"--import"* ]]; then
   echo "Import: $_DOCKER_IMAGE"
+
   docker_stop
   $_DOCKER rm $_DOCKER_CONTAINER > /dev/null 2>&1
   $_DOCKER rmi $_DOCKER_IMAGE > /dev/null 2>&1
