@@ -1,10 +1,10 @@
+
+### Image ###
+
+# Base image
 FROM ubuntu:12.04
 
-# Create default user
-RUN adduser user && adduser user sudo
-RUN echo "user:password" | chpasswd
-
-#*** Workaround for upstart errors ***#
+# *** Workaround for upstart (base image) issues *** #
 RUN apt-mark hold initscripts udev plymouth mountall ifupdown procps
 RUN dpkg-divert --local --rename --add /sbin/initctl;ln -sf /bin/true /sbin/initctl || true
 
@@ -17,25 +17,34 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3E5C1192
 
 RUN mkdir -p /var/run/sshd; mkdir -p /var/log/supervisor
 
+# Services/Applications
 RUN apt-get update -y; apt-get install vim sudo expect openssh-server supervisor -y
 RUN apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y
 
-## Service(s)
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-## Setup
+CMD ["/usr/bin/supervisord"]
+
+### Services/Applications ###
+
+# Install/Setup
 RUN apt-get -y install privoxy tor polipo || true
 
 EXPOSE 8123
 ADD privoxy.conf /etc/privoxy/config
+
 EXPOSE 9001 9030
-ADD tor.conf /etc/tor/torrc
+ADD tor.conf /etc/tor/
+
 EXPOSE 8118
 ADD polipo.conf /etc/polipo/conf
 
-## Extended Setup
+### Extended Setup ###
+
+# Create default user
+#RUN adduser user && adduser user sudo
+#RUN echo "user:password" | chpasswd
+
 # Note: doing all in one command is less container commits
 #ADD setup.sh /tmp/setup.sh
 #RUN chmod +x /tmp/setup.sh; chown root:root /tmp/setup.sh; /tmp/setup.sh
-
-CMD ["/usr/bin/supervisord"]
