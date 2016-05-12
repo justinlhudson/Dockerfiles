@@ -43,8 +43,8 @@ ADD polipo.conf /etc/polipo/conf
 ### Extended Setup ###
 
 # Create default user
-#RUN adduser user && adduser user sudo
-#RUN echo "user:password" | chpasswd
+RUN adduser user && adduser user sudo
+RUN echo "user:password" | chpasswd
 
 # Note: doing all in one command is less container commits
 #ADD setup.sh /tmp/setup.sh
