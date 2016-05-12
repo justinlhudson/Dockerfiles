@@ -10,8 +10,7 @@ _directory=$(basename $_base)
 # Note: tor: 8118 -> 9050, proxy: 8123
 
 ### Configuration ###
-
-_DOCKER_IMAGE=$(echo $_directory| tr '[:upper:]' '[:lower:]')
+_DOCKER_IMAGE=$(echo $_directory | tr '[:upper:]' '[:lower:]')
 _DOCKER_CONTAINER="$_DOCKER_IMAGE"_container
 
 ### Entry Point ###
@@ -25,7 +24,7 @@ docker_process() {
   # entry point (i.e. startup operation)
   local _execute="/usr/bin/supervisord"
 
-  _DOCKER_PID=$($_DOCKER run --detach --tty --net=host --hostname="$_host" --user="$_uid" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE $_execute)
+  _DOCKER_PID=$($_DOCKER run --detach --tty --net=host --hostname="$_host" --user="$_uid" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE "$_execute" )
 }
 
 source ./Dockercommand $_DOCKER_IMAGE $_DOCKER_CONTAINER $@

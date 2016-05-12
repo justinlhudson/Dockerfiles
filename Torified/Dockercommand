@@ -29,15 +29,22 @@ docker_clean() {
 }
 
 docker_stop() {
-  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1
+  $_DOCKER stop --time=10 $_DOCKER_CONTAINER > /dev/null 2>&1 || true
 }
 
 ### Terminal Operations ###
 
 if [[ "$@" == *"--start"* ]]; then
   echo "Start: $_DOCKER_IMAGE"
+
   docker_stop
-  docker rm -v $(docker ps -a -q -f status=exited | grep "$_DOCKER_CONTAINER") > /dev/null 2>&1
+
+  _exited=$(docker ps -a -q -f status=exited)
+  echo $_exited
+  if [ ! -z $_exited ]; then
+    docker rm --force $_exited > /dev/null 2>&1
+  fi
+
   docker_process
 fi
 
