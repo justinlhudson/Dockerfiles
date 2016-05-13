@@ -81,43 +81,27 @@ docker_import() {
 if [[ "$@" == *"--start"* ]]; then
   echo "Start: $_DOCKER_IMAGE"
   docker_start
-fi
-
-if [[ "$@" == *"--delete"* ]]; then
+elif [[ "$@" == *"--delete"* ]]; then
   echo "Delete: $_DOCKER_IMAGE"
   docker_delete
-fi
-
-if [[ "$@" == *"--commit"* ]]; then
+elif [[ "$@" == *"--commit"* ]]; then
   echo "Commit: $_DOCKER_CONTAINER to $_DOCKER_IMAGE"
   docker_commit
-fi
-
-if [[ "$@" == *"--build"* ]]; then
+elif [[ "$@" == *"--build"* ]]; then
   echo "Build: $_DOCKER_IMAGE"
-  docker_build
-fi
-
-if [[ "$@" == *"--stop"* ]]; then
+  docker_build $@
+elif [[ "$@" == *"--stop"* ]]; then
   echo "Stop: $_DOCKER_CONTAINER"
   docker_stop
-fi
-
-if [[ "$@" == *"--clean"* ]]; then
+elif [[ "$@" == *"--clean"* ]]; then
   docker_clean
-fi
-
-if [[ "$@" == *"--export"* ]]; then
+elif [[ "$@" == *"--export"* ]]; then
   echo "Export: $_DOCKER_CONTAINER"
   docker_export
-fi
-
-if [[ "$@" == *"--import"* ]]; then
+elif [[ "$@" == *"--import"* ]]; then
   echo "Import: $_DOCKER_IMAGE"
   docker_import
-fi
-
-if [[ "$@" == *"--help"* ]]; then
+else [[ "$@" == *"--help"* ]];
   echo -e "
 Usage: option(s)
 
