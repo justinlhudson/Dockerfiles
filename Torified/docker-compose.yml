@@ -1,5 +1,5 @@
 torified:
-# depends_on:
+  image: "torified"
   container_name: "torified-container"
   extends:
     file:  docker-compose-common.yml
@@ -17,4 +17,4 @@ torified:
     - "9030:9030"
 # environment:
 # env_file:
-
+# depends_on:
