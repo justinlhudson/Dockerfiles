@@ -1,0 +1,10 @@
+base:
+  build: .
+  log_driver: "none"
+  hostname: "${HOSTNAME}"
+  restart: always
+  stdin_open: true
+  tty: true
+# net: "host"
+# privileged: true
+

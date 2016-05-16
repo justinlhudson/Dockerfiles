@@ -19,12 +19,13 @@ docker_process() {
   local _host=$(hostname)
   local _uid=$UID
   # (used for port redirect)
-  local _ports="-p 2222:22"
+  local _ports="-p 2222:22 -p 8123:8123 -p 8118:8118 -p 9001:9001 -p 9030:9030"
 
   # entry point (i.e. startup operation)
   local _execute=/usr/bin/supervisord
 
-  _DOCKER_PID=$($_DOCKER run --detach --tty --net=host --restart=always --hostname="$_host" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE "$_execute" )
+  # --net=host
+  _DOCKER_PID=$($_DOCKER run --detach --tty --restart=always --hostname="$_host" --publish-all $_ports --name $_DOCKER_CONTAINER $_DOCKER_IMAGE "$_execute" )
 }
 
 source $_base/Dockercommand $_DOCKER_IMAGE $_DOCKER_CONTAINER $@
