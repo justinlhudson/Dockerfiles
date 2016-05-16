@@ -49,10 +49,10 @@ docker_clean() {
       docker rmi $_images
     fi
     # delete ALL images
-    #docker rmi $(docker images -q) > /dev/null 2>&1
+#    docker rmi $(docker images -q) > /dev/null 2>&1
   } ||
   { # finally
-     echo.
+     echo "Error..."
   }
 }
 

@@ -1,5 +1,4 @@
 torified:
-  image: "torified"
   container_name: "torified-container"
   hostname: "torified"
   extends:
@@ -11,7 +10,7 @@ torified:
 # links:
 # expose:
   ports:
-    - "2222:22"
+    - "127.0.0.1:2222:22"
     - "8123:8123"
     - "8118:8118"
     - "9001:9001"
