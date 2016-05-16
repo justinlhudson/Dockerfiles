@@ -1,10 +1,9 @@
 base:
-  build: $PWD
+  build: .
 #  log_driver: "none"
-hostname: "${HOSTNAME-default}"
   restart: always
 #  stdin_open: true
- tty: true
-#  net: "host"
+  tty: true
+  net: "host"
 #  privileged: true
 

@@ -1,6 +1,7 @@
 torified:
   image: "torified"
   container_name: "torified-container"
+  hostname: "torified"
   extends:
     file:  docker-compose-common.yml
     service: base
@@ -18,3 +19,4 @@ torified:
 # environment:
 # env_file:
 # depends_on:
+
