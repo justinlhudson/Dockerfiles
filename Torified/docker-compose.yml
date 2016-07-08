@@ -9,6 +9,7 @@ torified:
 # volumes:
 # links:
 # expose:
+# Note: net.ipv6.conf.all.forwarding=1 in the /etc/sysctl.conf
   ports:
     - "127.0.0.1:2222:22"
     - "8123:8123"
