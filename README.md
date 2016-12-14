@@ -1,8 +1,8 @@
 # Dockerfiles
 ===========
-### Notes
+## Notes
 
-#### Adding user to docker group to be able to run
+### Adding user to docker group to be able to run
 sudo usermod -aG docker $USER
 
 ## Torified
