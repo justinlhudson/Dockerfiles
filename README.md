@@ -3,7 +3,7 @@
 
 ## Torified
 
-Usage:  docker-compose up
+Usage:  docker-compose up, docker-compose stop 
 
 Default: user:password
 
