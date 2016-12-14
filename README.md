@@ -5,7 +5,7 @@
 
 Usage:  docker-compose up
 
-Note:  Is setup to always restart, so once start good to go forever.  But to feel good as this to cron job "@reboot cd <image directory> && compose up"
+Note:  Is setup to always restart, so once start good to go forever.  But to feel good add this to cron job "@reboot cd <image directory> && compose up"
 
 Tunnel: alias torified="ssh -L 8118:127.0.0.1:8118 -L 8123:127.0.0.1:8123 user@<ip>-p 2222"
 
