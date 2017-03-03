@@ -2,7 +2,7 @@ base:
   build: .
 #  log_driver: "none"
   restart: always
-#  stdin_open: true
+  stdin_open: true
   tty: true
   net: host
-#privileged: true
+  #privileged: true

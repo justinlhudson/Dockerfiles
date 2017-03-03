@@ -1,34 +1,28 @@
-
-### Image ###
-
 # Base image
-FROM ubuntu:12.04
-
-# *** Workaround for upstart (base image) issues *** #
-RUN apt-mark hold initscripts udev plymouth mountall ifupdown procps
-RUN dpkg-divert --local --rename --add /sbin/initctl;ln -sf /bin/true /sbin/initctl || true
+FROM ubuntu:14.04
 
 # Allow it to work regardless of locale/language set on the users machine
 RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
 
-# Add package list(s)
 ADD sources.list /etc/apt/sources.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3E5C1192
 
-RUN mkdir -p /var/run/sshd; mkdir -p /var/log/supervisor
+ENV DEBIAN_FRONTEND noninteractive
 
-# Services/Applications
-RUN apt-get update -y; apt-get install vim sudo expect openssh-server supervisor -y
-RUN apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y
+RUN apt-get update -y && apt-get install -y apt-utils sudo vim expect openssh-server supervisor
+RUN apt-get install -f; apt-get update -y; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y
+
+RUN mkdir -p /var/run/sshd; mkdir -p /var/log/supervisor; mkdir -p /root/.ssh
+RUN echo "export VISIBLE=now" >> /etc/profile
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Note: Can override in run command
+RUN echo "root:root" | chpasswd
+RUN adduser user && adduser user sudo
+RUN echo "user:password" | chpasswd
+
 CMD ["/usr/bin/supervisord"]
 
-### Services/Applications ###
-
-# Install/Setup
+# specifics to container
 RUN apt-get -y install privoxy tor polipo || true
 
 EXPOSE 8123
@@ -39,12 +33,6 @@ ADD tor.conf /etc/tor/
 
 EXPOSE 8118
 ADD polipo.conf /etc/polipo/conf
-
-### Extended Setup ###
-
-# Create default user
-RUN adduser user && adduser user sudo
-RUN echo "user:password" | chpasswd
 
 # Note: doing all in one command is less container commits
 #ADD setup.sh /tmp/setup.sh
