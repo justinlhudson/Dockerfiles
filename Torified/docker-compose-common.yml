@@ -4,5 +4,5 @@ base:
   restart: always
   stdin_open: true
   tty: true
-  net: host
+#  net: host
   #privileged: true
