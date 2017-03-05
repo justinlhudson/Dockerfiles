@@ -13,12 +13,13 @@ Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/
 
 ## Issues
 
-### Docker bridge (no connection to internet)
+### IPv4 to IPv6 Port Forwarding
 IPv6 Forward
 ```
 /etc/sysctl.conf
 net.ipv6.conf.all.forwarding=1
 ```
+### Docker bridge (no connection to internet)
 Restart bridge
 ```
 sudo iptables -t nat -F
