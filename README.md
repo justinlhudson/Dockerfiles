@@ -29,7 +29,12 @@ sudo service command docker restart
 ```
 ## Torified
 ```
-docker-compose up -d
+docker-compose build --no-cache
+docker-compose create
+docker-compose start
+docker-compose stop
+# Debug (in shell)
+docker-compose run --service-ports torified bash
 ```
 Default: user:password
 
