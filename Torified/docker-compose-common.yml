@@ -1,7 +1,7 @@
 base:
   build: .
 #  log_driver: "none"
-  restart: always
+  restart: on-failure
   stdin_open: true
   tty: true
 #  net: host
