@@ -29,6 +29,8 @@ sudo service command docker restart
 
 Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8123 and secure (using Tor) @ 8118
 
+Default: user:password
+
 ```
 startup.sh
 ```
@@ -37,8 +39,6 @@ startup.sh
 ```
 docker-compose run --service-ports torified bash
 ```
-
-Default: user:password
 
 ```
 alias torified="ssh -L 8118:127.0.0.1:8118 -L 8123:127.0.0.1:8123 user@[ip] -p 2222"
