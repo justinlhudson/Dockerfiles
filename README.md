@@ -7,10 +7,6 @@
 sudo usermod -aG docker $USER
 ```
 
-### Implementation
-
-Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8123 and secure (using Tor) @ 8118
-
 ## Issues
 
 ### IPv4 to IPv6 Port Forwarding
@@ -28,17 +24,21 @@ sudo brctl delbr docker0
 sudo service command docker restart
 ```
 ## Torified
+
+### Implementation
+
+Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8123 and secure (using Tor) @ 8118
+
 ```
-docker-compose build --no-cache
-docker-compose create
-docker-compose start
-docker-compose stop
+startup.sh
+```
+
 # Debug (in shell)
+```
 docker-compose run --service-ports torified bash
 ```
-Default: user:password
 
-Note:  Is setup to always restart, so once start good to go forever.  But to feel good add this to cron job "@reboot cd [image directory] && compose start
+Default: user:password
 
 ```
 alias torified="ssh -L 8118:127.0.0.1:8118 -L 8123:127.0.0.1:8123 user@[ip] -p 2222"
