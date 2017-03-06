@@ -33,7 +33,7 @@ Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/
 startup.sh
 ```
 
-# Debug (in shell)
+#### Debug (in shell)
 ```
 docker-compose run --service-ports torified bash
 ```
