@@ -6,7 +6,7 @@ _here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $_here
 cd $_here
 
-docker-compose stop
+/usr/local/bin/docker-compose/docker-compose stop
 
 # HACK: internet not working for docker?
 sudo service docker restart
@@ -18,5 +18,5 @@ sleep 1
 docker stop $(docker ps -a -q --filter="name=$_image")
 sleep 1
 
-docker-compose create
-docker-compose start
+/usr/local/bin/docker-compose/docker-compose create
+/usr/local/bin/docker-compose/docker-compose start
