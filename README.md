@@ -28,9 +28,9 @@ sudo service command docker restart
 
 Start terminal
 
-'''
+```
 docker run -it <image> /bin/bash
-'''
+```
 ## Torified
 
 ### Implementation
