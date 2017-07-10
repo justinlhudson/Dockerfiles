@@ -4,19 +4,27 @@ _image=$1
 
 _here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $_here
+
 cd $_here
 
-/usr/local/bin/docker-compose/docker-compose stop
+#docker-compose stop
 
-# HACK: internet not working for docker?
-sudo service docker restart
-sudo iptables -t nat -F
-sudo ifconfig docker0 down
-sudo brctl delbr docker0
-sudo service docker restart
+## HACK: internet not working for docker?
+#DOCKER_OPTS="--dns 8.8.8.8"
+service docker stop
+pkill docker
+iptables -t nat -F
+ifconfig docker0 down
+brctl delbr docker0
+service docker start
+
 sleep 1
 docker stop $(docker ps -a -q --filter="name=$_image")
 sleep 1
 
-/usr/local/bin/docker-compose/docker-compose create
-/usr/local/bin/docker-compose/docker-compose start
+#docker stop $(docker ps -a -q)
+#docker rm $(docker ps -a -q)
+#docker rmi $(docker images -a -q)
+
+docker-compose create
+docker-compose start
