@@ -1,16 +1,25 @@
+deb http://archive.ubuntu.com/ubuntu/ xenial main restricted
+deb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted
 
-deb http://old-releases.ubuntu.com/ubuntu/ precise main restricted
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise main restricted
+deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+deb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted
 
-deb http://old-releases.ubuntu.com/ubuntu/ precise-updates main restricted
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise-updates main restricted
+deb http://archive.ubuntu.com/ubuntu/ xenial universe
+deb-src http://archive.ubuntu.com/ubuntu/ xenial universe
+deb http://archive.ubuntu.com/ubuntu/ xenial-updates universe
+deb-src http://archive.ubuntu.com/ubuntu/ xenial-updates universe
 
-deb http://old-releases.ubuntu.com/ubuntu/ precise universe
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise universe
-deb http://old-releases.ubuntu.com/ubuntu/ precise-updates universe
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise-updates universe
+deb http://archive.ubuntu.com/ubuntu/ xenial multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ xenial multiverse
+deb http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse
 
-deb http://old-releases.ubuntu.com/ubuntu/ precise-security main restricted
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise-security main restricted
-deb http://old-releases.ubuntu.com/ubuntu/ precise-security universe
-deb-src http://old-releases.ubuntu.com/ubuntu/ precise-security universe
+deb http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+
+deb http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb-src http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb http://security.ubuntu.com/ubuntu xenial-security universe
+deb-src http://security.ubuntu.com/ubuntu xenial-security universe
+deb http://security.ubuntu.com/ubuntu xenial-security multiverse
+deb-src http://security.ubuntu.com/ubuntu xenial-security multiverse
