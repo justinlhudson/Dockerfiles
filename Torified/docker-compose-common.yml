@@ -1,8 +1,0 @@
-base:
-  build: .
-#  log_driver: "none"
-  restart: on-failure
-  stdin_open: true
-  tty: true
-#  net: host
-  #privileged: true
