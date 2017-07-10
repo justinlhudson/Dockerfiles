@@ -26,7 +26,7 @@ service docker start
 
 #while true
 #do
-docker-compose create && break
+docker-compose create #&& break
 #  sleep 30
 #done
 
