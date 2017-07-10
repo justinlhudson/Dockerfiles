@@ -8,7 +8,7 @@ echo $_here
 cd $_here
 
 sleep 1
-docker stop $(docker ps -a -q --filter="name=$_image")
+docker stop $(docker ps -a -q --filter="name=$_image") &> /dev/null
 sleep 1
 
 ## HACK: internet not working for docker?
