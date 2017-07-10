@@ -23,6 +23,14 @@ sudo ifconfig docker0 down
 sudo brctl delbr docker0
 sudo service command docker restart
 ```
+
+## Testing
+
+Start terminal
+
+'''
+docker run -it <image> /bin/bash
+'''
 ## Torified
 
 ### Implementation
