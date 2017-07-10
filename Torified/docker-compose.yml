@@ -1,12 +1,20 @@
-torified:
-  container_name: "torified-container"
-  hostname: "torified"
-  ports:
-    - "127.0.0.1:2222:22"
-    - "8123:8123"
-    - "8118:8118"
-    - "9001:9001"
-    - "9030:9030"
-  extends:
-    file:  docker-compose-common.yml
-    service: base
+version: '3.3'
+
+services:
+  torified:
+    build:
+      context: .
+    network_mode: host
+    dns: 8.8.8.8
+    stdin_open: true
+    tty: true
+    restart: on-failure
+#    privileged: true
+    image: "torified"
+    hostname: "torified"
+    ports:
+      - "127.0.0.1:2222:22"
+      - "8123:8123"
+      - "8118:8118"
+      - "9001:9001"
+      - "9030:9030"
