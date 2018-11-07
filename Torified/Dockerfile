@@ -2,12 +2,13 @@
 FROM ubuntu:16.04
 
 ADD sources.list /etc/apt/sources.list
+#RUN sed -i'' 's/archive\.ubuntu\.com/us\.archive\.ubuntu\.com/' /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y
+RUN apt-get -y update; apt-get install -f; apt-get upgrade -y; apt-get dist-upgrade -y;
+RUN apt-get autoremove -y; apt-get autoclean -y
 RUN apt-get install -y sudo vim expect supervisor
-RUN apt-get install -f; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile

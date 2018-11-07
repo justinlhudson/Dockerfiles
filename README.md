@@ -33,7 +33,8 @@ Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/
 Default: user:password
 
 ```
-startup.sh
+docker-compose build --force-rm --no-cache
+docker-compose up -d
 ```
 
 #### Debug (in shell)
