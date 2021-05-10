@@ -9,11 +9,10 @@ sudo usermod -aG docker $USER
 
 ## Issues
 
-### IPv4 to IPv6 Port Forwarding
-IPv6 Forward
+### IPv4 Forwarding
 ```
 /etc/sysctl.conf
-net.ipv6.conf.all.forwarding=1
+net.ipv4.ip_forward=1
 ```
 ### Docker bridge (no connection to internet)
 Restart bridge
