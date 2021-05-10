@@ -16,6 +16,7 @@ net.ipv4.ip_forward=1
 ```
 ### Docker bridge (no connection to internet)
 Restart bridge
+Note: DEPRECATED
 ```
 sudo iptables -t nat -F
 sudo ifconfig docker0 down
