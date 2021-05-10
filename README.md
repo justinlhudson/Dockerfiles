@@ -17,12 +17,14 @@ net.ipv4.ip_forward=1
 ### Docker bridge (no connection to internet)
 Restart bridge
 - DEPRECATED
+<s>
 ```
 sudo iptables -t nat -F
 sudo ifconfig docker0 down
 sudo brctl delbr docker0
 sudo service command docker restart
 ```
+</s>
 
 ## Torified
 
