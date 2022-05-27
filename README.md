@@ -3,9 +3,12 @@
 ## Notes
 
 ### Adding user to docker group to be able to run
+- DEPRECATED
+<s>
 ```
 sudo usermod -aG docker $USER
 ```
+</s>
 
 ## Issues
 
