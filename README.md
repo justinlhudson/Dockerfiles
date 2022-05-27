@@ -2,6 +2,9 @@
 ===========
 ## Notes
 
+### Prerequisites
+docker, docker-compose
+
 ### Adding user to docker group to be able to run
 - DEPRECATED
 <s>
