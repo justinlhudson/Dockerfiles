@@ -46,7 +46,3 @@ docker-compose up -d
 ```
 docker-compose run --service-ports torified bash
 ```
-
-```
-alias torified="ssh -L 8118:127.0.0.1:8118 -L 8123:127.0.0.1:8123 user@[ip] -p 2222"
-```
