@@ -4,11 +4,12 @@ services:
   torified:
     build:
       context: .
-    network_mode: host
-    dns: 8.8.8.8
+    restart: unless-stopped
+#    dns:
+#      - 8.8.8.8
     stdin_open: true
     tty: true
-    restart: on-failure
+    restart: always
 #    privileged: true
     image: "torified"
     hostname: "torified"
@@ -18,3 +19,4 @@ services:
       - "8118:8118"
       - "9001:9001"
       - "9030:9030"
+      - "9050:9050"

@@ -1,27 +1,32 @@
 # Base image
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
-ADD sources.list /etc/apt/sources.list
+# timezone
+ENV TZ="UTC"
 
+# Disable Prompt During Packages Installation
+#ARG DEBIAN_FRONTEND noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y
-RUN apt-get install -y sudo vim expect supervisor
-RUN apt-get install -f; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y
+RUN apt update; apt upgrade -y
+RUN apt autoremove -y; apt autoclean -y
+RUN apt install -y sudo vim expect supervisor fail2ban
 
+# when using sshd to spawn shells
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
+# default user as user:password
 RUN echo root:root | chpasswd
 RUN adduser user && adduser user sudo
 RUN echo user:password | chpasswd
 
+# supervisor
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 CMD ["/usr/bin/supervisord"]
 
-# specifics to container
+## specifics to container ##
 RUN apt-get -y install openssh-server privoxy tor
 
 EXPOSE "22"
@@ -34,6 +39,7 @@ ADD privoxy-tor.conf /etc/privoxy/config-tor
 
 EXPOSE "9001"
 EXPOSE "9030"
+EXPOSE "9050"
 ADD tor.conf /etc/tor/
 
 # Note: doing all in one command is less container commits
