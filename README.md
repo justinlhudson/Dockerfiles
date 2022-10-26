@@ -1,7 +1,5 @@
 # Dockerfiles
 ===========
-## Notes
-
 ### Prerequisites
 docker, docker-compose
 
