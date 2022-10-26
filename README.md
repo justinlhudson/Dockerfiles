@@ -5,11 +5,6 @@
 ### Prerequisites
 docker, docker-compose
 
-### Adding user to docker group to be able to run
-```
-sudo usermod -aG docker $USER
-```
-
 ## Issues
 
 ### IPv4 Forwarding
@@ -19,7 +14,6 @@ net.ipv4.ip_forward=1
 ```
 ### Docker bridge (no connection to internet)
 Restart bridge
-- DEPRECATED
 <s>
 ```
 sudo iptables -t nat -F
