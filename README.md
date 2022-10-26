@@ -1,7 +1,7 @@
 # Dockerfiles
 ===========
 ### Prerequisites
-docker, docker-compose
+docker
 
 ## Issues
 
@@ -30,11 +30,11 @@ Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/
 Default: user:password
 
 ```
-docker-compose build --force-rm --no-cache
-docker-compose up -d
+docker compose build --force-rm --no-cache
+docker compose up -d
 ```
 
 #### Debug (in shell)
 ```
-docker-compose run --service-ports torified bash
+docker compose run --service-ports torified bash
 ```
