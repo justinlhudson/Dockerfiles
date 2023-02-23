@@ -32,7 +32,7 @@ RUN apt-get -y install openssh-server privoxy tor
 EXPOSE "22"
 RUN mkdir -p /var/run/sshd/
 
-EXPOSE "8123"
+EXPOSE "8119"
 ADD privoxy.conf /etc/privoxy/config
 EXPOSE "8118"
 ADD privoxy-tor.conf /etc/privoxy/config-tor
