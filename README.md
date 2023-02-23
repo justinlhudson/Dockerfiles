@@ -25,7 +25,7 @@ sudo service command docker restart
 
 ### Implementation
 
-Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8123 and secure (using Tor) @ 8118
+Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8118 and secure (using Tor) @ 8119
 
 Default: user:password
 
