@@ -1,7 +1,14 @@
 # Dockerfiles
 ===========
+## Notes
+
 ### Prerequisites
-docker
+docker, docker-compose
+
+### Adding user to docker group to be able to run
+```
+sudo usermod -aG docker $USER
+```
 
 ## Issues
 
@@ -12,6 +19,7 @@ net.ipv4.ip_forward=1
 ```
 ### Docker bridge (no connection to internet)
 Restart bridge
+- DEPRECATED
 <s>
 ```
 sudo iptables -t nat -F
@@ -25,16 +33,20 @@ sudo service command docker restart
 
 ### Implementation
 
-Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8118 and secure (using Tor) @ 8119
+Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/).  Has normal proxy at port @ 8123 and secure (using Tor) @ 8118
 
 Default: user:password
 
 ```
-docker compose build --force-rm --no-cache
-docker compose up -d
+docker-compose build --force-rm --no-cache
+docker-compose up -d
 ```
 
-#### Debug (in shell)
+## Other
+
+## *** Debug ***
+
+#### shell
 ```
-docker compose run --service-ports torified bash
+docker-compose run --service-ports torified bash
 ```
