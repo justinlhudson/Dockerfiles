@@ -31,10 +31,10 @@ Default: user:password
   - copy to container
 - shared
   - shared files
-- data
-  - mongodb persistent storage
+- store
+  - persistent storage
 - setup.sh
-  - used to setup your environment specifics
+  - used to set your environment specifics
 - supervisor
   - sshd
     -  can be used to ssh into the container
