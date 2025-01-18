@@ -1,33 +1,13 @@
 # Dockerfiles
-===========
-## Notes
-
+================
 ### Prerequisites
 docker, docker-compose
 
-### Adding user to docker group to be able to run
+### Usage
 ```
-sudo usermod -aG docker $USER
+docker-compose build --force-rm --no-cache
+docker-compose up -d
 ```
-
-## Issues
-
-### IPv4 Forwarding
-```
-/etc/sysctl.conf
-net.ipv4.ip_forward=1
-```
-### Docker bridge (no connection to internet)
-Restart bridge
-- DEPRECATED
-<s>
-```
-sudo iptables -t nat -F
-sudo ifconfig docker0 down
-sudo brctl delbr docker0
-sudo service command docker restart
-```
-</s>
 
 ## Torified
 
@@ -37,16 +17,24 @@ Uses: [privoxy](https://www.privoxy.org/), and [tor](https://www.torproject.org/
 
 Default: user:password
 
-```
-docker-compose build --force-rm --no-cache
-docker-compose up -d
-```
+## Boilerplate
 
-## Other
+Ready to go get your stuff running stack!!!
 
-## *** Debug ***
+### Implementation
+Compose file to startup redis cache (in memory only) and mongodb server containers as well as this "workspace" container.
 
-#### shell
-```
-docker-compose run --service-ports torified bash
-```
+Default: user:password
+
+### Features
+- workspace
+  - shared folder
+- data
+  - mongodb persistent storage 
+- setup.sh
+  - used to setup your environment specifics
+- supervisor
+  - sshd
+    -  can be used to ssh into the container
+  - ...
+

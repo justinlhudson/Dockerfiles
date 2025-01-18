@@ -1,0 +1,43 @@
+
+# https://docs.docker.com/compose/intro/compose-application-model/
+#docker-compose up
+#version: '3.9'
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: workspace.dockerfile
+    depends_on:
+      - redis
+      - mongodb
+    stdin_open: true  # interact with container
+    tty: true # apps that require a terminal
+    restart: unless-stopped
+    ports:
+      - "22:22"
+    networks:
+      - network_workspace
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 0 0
+  mongodb:
+    image: mongodb:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
+volumes:
+  data:
+networks:
+  network_workspace:
+    driver: bridge
