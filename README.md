@@ -28,9 +28,11 @@ Default: user:password
 
 ### Features
 - workspace
-  - shared folder
+  - copy to container
+- shared
+  - shared files
 - data
-  - mongodb persistent storage 
+  - mongodb persistent storage
 - setup.sh
   - used to setup your environment specifics
 - supervisor

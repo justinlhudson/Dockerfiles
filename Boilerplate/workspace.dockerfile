@@ -43,6 +43,9 @@ RUN /tmp/setup.sh
 # Port(s)
 EXPOSE 22
 
+# Shared volume directory
+VOLUME ./data
+
 # Workspace creation
 WORKDIR workspace
 COPY ./workspace ./
