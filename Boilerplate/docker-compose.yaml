@@ -34,7 +34,7 @@ services:
       - "27017:27017"
     volumes:
       - type: bind
-        source: ./data
+        source: ./store/mongo-data
         target: /data/db
 volumes:
   data:
