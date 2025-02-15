@@ -1,12 +1,12 @@
 # Dockerfiles
 ================
 ### Prerequisites
-docker, docker-compose
+docker, docker-compose-plugin
 
 ### Usage
 ```
-docker-compose build --force-rm --no-cache
-docker-compose -f <compose-file> up -d
+docker compose build --force-rm --no-cache
+docker compose -f <compose-file> up -d
 ```
 
 ## Torified
